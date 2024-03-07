@@ -4,6 +4,11 @@
 sudo apt update
 sudo apt upgrade -y
 
+# Install sudo if not already installed
+if ! command -v sudo &> /dev/null; then
+    apt-get install -y sudo
+fi
+
 # Prompt for username
 read -p "Enter username: " username
 
@@ -15,12 +20,6 @@ sudo adduser --quiet --disabled-password --shell /bin/bash --home /home/$usernam
 
 # Set password for user
 echo "${username}:${password}" | sudo chpasswd
-
-# Install sudo if not already installed
-if ! command -v sudo &> /dev/null; then
-    apt-get update
-    apt-get install -y sudo
-fi
 
 # Add user to sudo group
 sudo usermod -aG sudo $username

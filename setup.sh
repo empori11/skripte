@@ -24,6 +24,18 @@ echo "${username}:${password}" | sudo chpasswd
 # Add user to sudo group
 sudo usermod -aG sudo $username
 
+# Check if .ssh directory exists
+if [ ! -d "/home/$username/.ssh" ]; then
+    sudo -u $username mkdir /home/$username/.ssh
+    sudo -u $username chmod 700 /home/$username/.ssh
+fi
+
+# Check if authorized_keys file exists
+if [ ! -f "/home/$username/.ssh/authorized_keys" ]; then
+    sudo -u $username touch /home/$username/.ssh/authorized_keys
+    sudo -u $username chmod 600 /home/$username/.ssh/authorized_keys
+fi
+
 # Add given SSH key to authorized keys
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSOi7o7uKwo95KCvKwhLo2ZgHKaGKWK1nZ+XUCl3su9 homelab" | sudo -u $username tee -a /home/$username/.ssh/authorized_keys
 

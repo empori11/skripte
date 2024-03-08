@@ -16,7 +16,7 @@ read -p "Enter username: " username
 read -s -p "Enter password: " password
 
 # Create user
-sudo adduser -m --quiet --disabled-password --shell /bin/bash --home /home/$username --gecos "User" $username
+sudo adduser --quiet --disabled-password --shell /bin/bash --home /home/$username --gecos "User" $username
 
 # Set password for user
 echo "${username}:${password}" | sudo chpasswd
